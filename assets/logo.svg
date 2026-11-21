@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 140" width="100%" height="100%">
+  <defs>
+    <linearGradient id="gofyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E84393" />
+      <stop offset="100%" stop-color="#FD79A8" />
+    </linearGradient>
+    <linearGradient id="kidsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00CEC9" />
+      <stop offset="100%" stop-color="#81ECEC" />
+    </linearGradient>
+    <linearGradient id="warmAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9F43" />
+      <stop offset="100%" stop-color="#FECA57" />
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#E84393" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Icon: Modern Fashion Hanger with a playful Kid's heart & star -->
+  <g transform="translate(15, 12)">
+    <!-- Glow / BG Circle -->
+    <circle cx="55" cy="55" r="50" fill="#FFF0F5" filter="url(#softShadow)" />
+    
+    <!-- Hanger Hook -->
+    <path d="M 55 25 C 55 18, 45 18, 45 25 C 45 33, 55 35, 55 42" 
+          fill="none" stroke="#E84393" stroke-width="4.5" stroke-linecap="round" />
+    
+    <!-- Hanger Body with Soft Curve -->
+    <path d="M 24 66 L 55 42 L 86 66 C 89 69, 86 74, 80 74 L 30 74 C 24 74, 21 69, 24 66 Z" 
+          fill="url(#gofyGrad)" />
+    
+    <!-- Cutout Bar underneath -->
+    <line x1="32" y1="74" x2="78" y2="74" stroke="#D63031" stroke-width="2" opacity="0.3" />
+
+    <!-- Cute Smiling Cloud / Baby motif inside hanger -->
+    <circle cx="55" cy="58" r="6" fill="#FFFFFF" />
+    
+    <!-- Floating playful heart (Women's touch) -->
+    <path d="M 78 30 C 78 24, 71 20, 67 25 C 63 20, 56 24, 56 30 C 56 38, 67 44, 67 44 C 67 44, 78 38, 78 30 Z" 
+          fill="url(#warmAccent)" transform="scale(0.55) translate(40, -10)" />
+
+    <!-- Playful stars (Kids' touch) -->
+    <path d="M 90 70 Q 92 73 95 74 Q 92 75 90 78 Q 88 75 85 74 Q 88 73 90 70 Z" 
+          fill="url(#kidsGrad)" transform="scale(1.1) translate(-5, 0)" />
+  </g>
+
+  <!-- GOFY Text -->
+  <text x="140" y="76" font-family="'Cairo', 'Poppins', 'Segoe UI', sans-serif" font-weight="900" font-size="58" letter-spacing="2">
+    <tspan fill="#E84393">G</tspan>
+    <tspan fill="#00CEC9">O</tspan>
+    <tspan fill="#E84393">F</tspan>
+    <tspan fill="#FF9F43">Y</tspan>
+  </text>
+
+  <!-- Tagline Arabic (Bold and legible) -->
+  <text x="142" y="106" font-family="'Cairo', 'Tajawal', sans-serif" font-weight="800" font-size="18" fill="#3D4548" letter-spacing="0.5">
+    ملابس أطفال &amp; حريمي • أناقة ومرح
+  </text>
+  
+  <!-- Small Decorative Dots -->
+  <circle cx="340" cy="53" r="4" fill="#00CEC9" />
+  <circle cx="355" cy="44" r="3" fill="#FECA57" />
+  <circle cx="365" cy="56" r="2.5" fill="#E84393" />
+</svg>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار ربط متجر GOFY بجوجل شيت</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #FAF7F5;
+      color: #2D3436;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: #FFFFFF;
+      max-width: 620px;
+      width: 100%;
+      border-radius: 18px;
+      padding: 32px 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid #EFE8E4;
+    }
+    h2 {
+      color: #E84393;
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    p {
+      color: #636E72;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid #EFE8E4;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      direction: ltr;
+      text-align: left;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #E84393;
+      box-shadow: 0 0 0 3px rgba(232, 67, 147, 0.15);
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    button {
+      flex: 1;
+      padding: 13px;
+      border-radius: 30px;
+      border: none;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #E84393, #FD79A8);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(232, 67, 147, 0.35);
+    }
+    .btn-back {
+      background: #EDF2F7;
+      color: #4A5568;
+    }
+    .status-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .status-box.success {
+      background: #E6FFFA;
+      border: 1px solid #38B2AC;
+      color: #234E52;
+      display: block;
+    }
+    .status-box.error {
+      background: #FFF5F5;
+      border: 1px solid #E53E3E;
+      color: #742A2A;
+      display: block;
+    }
+    .steps {
+      background: #FFF0F5;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 22px;
+      font-size: 0.88rem;
+    }
+    .steps ol {
+      padding-right: 20px;
+      margin-top: 8px;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>📊 ربط واختبار Google Sheets</h2>
+    <p>قم بوضع رابط الـ Web App URL الناتج من نشر كود Google Apps Script لتفعيل تسجيل الطلبات في شيت إكسيل تلقائياً.</p>
+
+    <div class="steps">
+      <strong>الخطوات البسيطة:</strong>
+      <ol>
+        <li>افتح شيت جوجل واضغط <strong>التوسيعات (Extensions) &gt; Apps Script</strong>.</li>
+        <li>انسخ الكود من ملف <code>google_sheets/Code.gs</code> والصقه هناك.</li>
+        <li>اضغط <strong>نشر (Deploy) &gt; توزيع جديد (New deployment) &gt; تطبيق ويب (Web app)</strong>.</li>
+        <li>اجعل إمكانية الوصول: <strong>أي شخص (Anyone)</strong> واضغط نشر.</li>
+        <li>انسخ الرابط والصقه في المربع أدناه:</li>
+      </ol>
+    </div>
+
+    <div class="form-group">
+      <label for="scriptUrl">رابط تطبيق الويب (Google Web App URL):</label>
+      <input type="text" id="scriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+    </div>
+
+    <div class="btn-group">
+      <button class="btn-primary" id="btnSaveAndTest">💾 حفظ وإرسال طلب تجريبي</button>
+      <button class="btn-back" onclick="window.location.href='../index.html'">العودة للمتجر</button>
+    </div>
+
+    <div class="status-box" id="statusBox"></div>
+  </div>
+
+  <script>
+    const currentUrl = localStorage.getItem("gofy_sheets_url") || "";
+    document.getElementById("scriptUrl").value = currentUrl;
+
+    document.getElementById("btnSaveAndTest").addEventListener("click", async () => {
+      const url = document.getElementById("scriptUrl").value.trim();
+      const statusBox = document.getElementById("statusBox");
+      const btn = document.getElementById("btnSaveAndTest");
+
+      if (!url || !url.startsWith("https://script.google.com/")) {
+        statusBox.className = "status-box error";
+        statusBox.textContent = "يرجى إدخال رابط Web App صحيح يبدأ بـ https://script.google.com/";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "جاري الحفظ وإرسال الطلب التجريبي...";
+      statusBox.style.display = "none";
+
+      try {
+        // Save in localStorage for the main website
+        localStorage.setItem("gofy_sheets_url", url);
+
+        // Send a test order
+        const testPayload = {
+          orderId: "GOFY-TEST-" + Math.floor(Math.random() * 90000 + 10000),
+          timestamp: new Date().toLocaleString("ar-EG"),
+          customerName: "طلب تجريبي لاختبار الربط",
+          customerPhone: "01006563866",
+          customerGov: "المنيا",
+          customerAddress: "شارع ابن خصيب / عدنان المالكي",
+          productName: "فستان بناتي صيفي كشكش قطن تركي ناعم",
+          category: "أطفال - بنات",
+          size: "2-3 سنوات",
+          color: "وردي ناعم",
+          quantity: 1,
+          price: 320,
+          totalPrice: 320,
+          customerNotes: "تم إرسال هذا الطلب آلياً للتأكد من نجاح ربط شيت جوجل"
+        };
+
+        await fetch(url, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(testPayload)
+        });
+
+        statusBox.className = "status-box success";
+        statusBox.innerHTML = `
+          <strong>🎉 تم بنجاح!</strong><br>
+          تم حفظ الرابط وتفعيله في متجر GOFY، وتم إرسال طلب تجريبي برقم (<strong>${testPayload.orderId}</strong>).<br>
+          افتح شيت جوجل الآن وستجد الصف الأول تم إنشاؤه وتنسيقه تلقائياً بالهيدر الوردي وبيانات الطلب!
+        `;
+
+      } catch (err) {
+        statusBox.className = "status-box error";
+        statusBox.innerHTML = `حدث خطأ أثناء الاتصال: ${err.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "💾 حفظ وإرسال طلب تجريبي";
+      }
+    });
+  </script>
+</body>
+</html>
